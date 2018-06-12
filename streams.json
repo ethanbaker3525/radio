@@ -1,0 +1,28 @@
+{
+  "rap":{
+    "station1":{
+      "url":"http://94.130.238.52:8016/stream",
+      "name":"Party Vibe Radio: Trap Hip Hop"
+    },
+    "station2":{
+      "url":"http://us5.internet-radio.com:8099/stream",
+      "name":"Mivu: Chill and Hip Hop"
+    },
+    "station3":{
+      "url":"http://138.201.234.215:10227/stream",
+      "name":"1 Power Radio Hip Hop and Rnb"
+    }
+  },
+  "bbc":{
+    "station1":{
+      "url":"http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-eieuk",
+      "name":"BBC World News"
+    }
+  },
+  "lofi":{
+    "station1":{
+      "url":"http://85.214.76.113:8000/",
+      "name":"ToXoRs Lofi Hip Hop"
+    }
+  }
+}
