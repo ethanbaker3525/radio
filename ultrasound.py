@@ -36,12 +36,13 @@ class MyUltrasonicSensor(UltrasonicSensor):
         self.threshold = (sum(tests)/num_tests)*avg_w + min(tests)*min_w
         print("THRESHOLD SET TO: " +str(self.threshold))
 
-    def loop(self, rate_s=30, minimum_overhead_time_s=0.1):
+    def loop(self, rate_s=2, minimum_overhead_time_s=0.25):
         sleep_time = 1/rate_s
         num_ticks = rate_s*minimum_overhead_time_s
         counter = 0
         while 1:
             distance = self.get_distance()
+            print(distance)
             if distance < self.threshold:
                 counter += 1
                 if counter >= num_ticks:
