@@ -62,7 +62,7 @@ class MyUltrasonicSensor(UltrasonicSensor):
             if sum(ma)/ma_number < self.threshold:
                 counter += 1
                 if counter >= num_ticks:
-                    activation_meth()
+                    self.activation_meth()
             else:
                 counter = 0
             time.sleep(sleep_time)
