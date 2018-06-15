@@ -42,7 +42,7 @@ class MyUltrasonicSensor(UltrasonicSensor):
         self.threshold = (sum(tests)/num_tests)*avg_w + min(tests)*min_w
         print("THRESHOLD SET TO: " +str(self.threshold))
 
-    def activation_meth():
+    def activation_meth(self):
 
         print('activated')
 
