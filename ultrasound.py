@@ -43,10 +43,10 @@ class MyUltrasonicSensor(UltrasonicSensor):
         counter = 0
         ma = []
 
-        for i in range(ema_number):
+        for i in range(ma_number):
             ema.append(self.get_distance())
             sleep(rate_s)
-            
+
         while 1:
             del ma[0]
             ma.append(self.get_distance())
