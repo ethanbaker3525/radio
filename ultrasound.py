@@ -36,19 +36,27 @@ class MyUltrasonicSensor(UltrasonicSensor):
         self.threshold = (sum(tests)/num_tests)*avg_w + min(tests)*min_w
         print("THRESHOLD SET TO: " +str(self.threshold))
 
-    def loop(self, rate_s=2, minimum_overhead_time_s=0.25):
+    def loop(self, rate_s=25, minimum_overhead_time_s=1, ma_number=3):
+
         sleep_time = 1/rate_s
-        num_ticks = rate_s*minimum_overhead_time_s
+        num_ticks = 1+rate_s*minimum_overhead_time_s
         counter = 0
+        ma = []
+
+        for i in range(ema_number):
+            ema.append(self.get_distance())
+            sleep(rate_s)
+            
         while 1:
-            distance = self.get_distance()
-            print(distance)
-            if distance < self.threshold:
+            del ma[0]
+            ma.append(self.get_distance())
+            if sum(ma)/ma_number < self.threshold:
                 counter += 1
                 if counter >= num_ticks:
                     print('activated')
             else:
                 counter = 0
+            sleep(rate_s)
 
 
 
