@@ -45,7 +45,7 @@ class MyUltrasonicSensor(UltrasonicSensor):
 
         for i in range(ma_number):
             ma.append(self.get_distance())
-            sleep(rate_s)
+            time.sleep(rate_s)
 
         while 1:
             del ma[0]
@@ -56,7 +56,7 @@ class MyUltrasonicSensor(UltrasonicSensor):
                     print('activated')
             else:
                 counter = 0
-            sleep(rate_s)
+            time.sleep(rate_s)
 
 
 
