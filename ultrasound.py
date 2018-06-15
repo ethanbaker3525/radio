@@ -31,13 +31,26 @@ class MyUltrasonicSensor(UltrasonicSensor):
     def __init__(self):
         UltrasonicSensor.__init__(self, PIN_TRIGGER, PIN_ECHO)
 
-    def calibrate(self, num_tests=100):
+    def calibrate(self, num_tests=100, avg_w=0.7, min_w=0.3):
         tests = [self.get_distance() for i in range(num_tests)]
-        self.threshold = (sum(tests)/num_tests)*0.7 + min(tests)*0.3
+        self.threshold = (sum(tests)/num_tests)*avg_w + min(tests)*min_w
         print("THRESHOLD SET TO: " +str(self.threshold))
 
-    def run(self, rate):
-        sleep_time = 1/rate
+    def loop(self, rate_s=30, minimum_overhead_time_s=0.1):
+        sleep_time = 1/rate_s
+        num_ticks = rate_s*minimum_overhead_time_s
+        counter = 0
+        while 1:
+            distance = self.get_distance()
+            if distance < self.threshold:
+                counter += 1
+                if counter >= num_ticks:
+                    print('activated')
+            else:
+                counter = 0
+
+
+
 
 if __name__ == '__main__':
     x = MyUltrasonicSensor()
@@ -45,3 +58,4 @@ if __name__ == '__main__':
         print(str(x.get_distance()))
         time.sleep(0.5)
     x.calibrate()
+    x.loop()
