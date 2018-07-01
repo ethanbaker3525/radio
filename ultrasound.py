@@ -40,7 +40,7 @@ class MyUltrasonicSensor(UltrasonicSensor):
     def calibrate(self, num_tests=100):
 
         tests = [self.get_distance() for i in range(num_tests)]
-        self.act_thresh = sum(tests)/num_tests * 0.9
+        self.act_thresh = sum(tests)/num_tests * 0.5
         self.err_thresh = sum(tests)/num_tests * 1.5
 
     def loop(self, rate_s=50, minimum_overhead_time_s=0.05, ma_number=6):
