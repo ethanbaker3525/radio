@@ -54,23 +54,30 @@ class MyUltrasonicSensor(UltrasonicSensor):
         while 1:
             del ma[0]
             ma.append(self.get_distance())
+            
             # Pause Play
             if num_ticks_pause >= ticks and sum(ma)/ma_number >= self.threshold:
                 print('pause/play')
                 break
+
             # Raise Lower Vol
             if num_ticks_pause < ticks:
-                if sum(ma)/ma_number - 10 > base:
-                    self.volume += 1
+
+                if sum(ma)/ma_number - 5 > base and self.get_distance() < self.threshold:
+                    self.volume += 5
                     base = sum(ma)/ma_number
-                elif sum(ma)/ma_number + 10 < base:
-                    self.volume -= 1
+
+                elif sum(ma)/ma_number + 5 < base and self.get_distance() < self.threshold:
+                    self.volume = self.volume - 5
                     base = sum(ma)/ma_number
+
                 if self.volume > 100:
                     self.volume = 100
                 elif self.volume < 0:
                     self.volume = 0
+
                 print(self.volume)
+
                 if sum(ma)/ma_number >= self.threshold:
                     break
 
