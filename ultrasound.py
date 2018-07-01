@@ -50,6 +50,7 @@ class MyUltrasonicSensor(UltrasonicSensor):
             if dist < self.act_thresh:
                 print('activated')
                 while dist > self.err_thresh or dist < self.act_thresh:
+                    dist = self.get_distance()
                     time.sleep(0.1)
             time.sleep(0.05)
 
