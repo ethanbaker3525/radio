@@ -91,11 +91,17 @@ class MyUltrasonicSensor(UltrasonicSensor):
 
     def loop(self, rate_s=50, minimum_overhead_time_s=0.05, ma_number=6):
 
+
+
         sleep_time = 1/rate_s
         num_ticks = 1+rate_s*minimum_overhead_time_s
         counter = 0
         ma = []
+        while 1:
+            print(str(self.get_distance()))
+            time.sleep(sleep_time)
 
+'''
         for i in range(ma_number):
             ma.append(self.get_distance())
             time.sleep(sleep_time)
@@ -109,7 +115,7 @@ class MyUltrasonicSensor(UltrasonicSensor):
             else:
                 counter = 0
             time.sleep(sleep_time)
-
+'''
 if __name__ == '__main__':
 
     x = MyUltrasonicSensor()
