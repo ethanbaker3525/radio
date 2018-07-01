@@ -61,10 +61,11 @@ class MyUltrasonicSensor(UltrasonicSensor):
             # Raise Lower Vol
             if num_ticks_pause < ticks:
                 if sum(ma)/ma_number - 10 > base:
-                    self.volume += 0.5
+                    self.volume += 1
+                    base = sum(ma)/ma_number
                 elif sum(ma)/ma_number + 10 < base:
-                    self.volume -= 0.5
-                base = sum(ma)/ma_number
+                    self.volume -= 1
+                    base = sum(ma)/ma_number
                 if self.volume > 100:
                     self.volume = 100
                 elif self.volume < 0:
