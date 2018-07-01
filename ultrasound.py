@@ -35,6 +35,7 @@ class MyUltrasonicSensor(UltrasonicSensor):
     def __init__(self):
 
         UltrasonicSensor.__init__(self, PIN_TRIGGER, PIN_ECHO)
+        self.volume = 50
 
     def calibrate(self, num_tests=100, avg_w=0.7, min_w=0.3, per_weight=0.90):
 
@@ -61,7 +62,13 @@ class MyUltrasonicSensor(UltrasonicSensor):
             if num_ticks_pause < ticks:
                 raise_vol_val = (sum(ma)/ma_number - base) * vol_mod
                 base = sum(ma)/ma_number - base
-                print('Volume +'+str(raise_vol_val))
+                self.volume += raise_vol_val
+                if self.volume > 100:
+                    self.volume = 100
+                elif self.volume < 0:
+                    self.volume = 0
+                if ticks % 10 == 0:
+                    print(self.volume)
                 if sum(ma)/ma_number >= self.threshold:
                     break
 
