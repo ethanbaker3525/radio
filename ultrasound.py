@@ -36,17 +36,44 @@ class MyUltrasonicSensor(UltrasonicSensor):
 
         UltrasonicSensor.__init__(self, PIN_TRIGGER, PIN_ECHO)
 
-    def calibrate(self, num_tests=100, avg_w=0.7, min_w=0.3):
+    def calibrate(self, num_tests=100, avg_w=0.7, min_w=0.3, per_weight=0.90):
 
         tests = [self.get_distance() for i in range(num_tests)]
-        self.threshold = (sum(tests)/num_tests)*avg_w + min(tests)*min_w
+        self.threshold = ((sum(tests)/num_tests)*avg_w + min(tests)*min_w) * per_weight
         print("THRESHOLD SET TO: " +str(self.threshold))
 
-    def activation_meth(self):
+    def activation_meth(self, ma, ma_number, sleep_time, change_act_thresh=1.05, max_pause_time=0.5, vol_mod=0.5):
+
+        base = sum(ma)/ma_number
+        rate_s = 1/sleep_time
+        num_ticks_pause = int(max_pause_time * rate_s)
+
+        ticks = 0
+
+        while 1:
+            del ma[0]
+            ma.append(self.get_distance())
+            # Pause Play
+            if num_ticks_pause >= ticks and sum(ma)/ma_number >= self.threshold:
+                print('pause/play')
+                break
+            # Raise Lower Vol
+            if num_ticks_pause < ticks:
+                raise_vol_val = (sum(ma)/ma_number - base) * vol_mod
+                base = sum(ma)/ma_number - base
+                print('Volume +'+str(raise_vol_val))
+                if sum(ma)/ma_number >= self.threshold:
+                    break
+
+
+            time.sleep(sleep_time)
+            ticks += 1
+
+
 
         print('activated')
 
-    def loop(self, rate_s=25, minimum_overhead_time_s=0.05, ma_number=3):
+    def loop(self, rate_s=50, minimum_overhead_time_s=0.05, ma_number=6):
 
         sleep_time = 1/rate_s
         num_ticks = 1+rate_s*minimum_overhead_time_s
@@ -62,7 +89,7 @@ class MyUltrasonicSensor(UltrasonicSensor):
             if sum(ma)/ma_number < self.threshold:
                 counter += 1
                 if counter >= num_ticks:
-                    self.activation_meth()
+                    self.activation_meth(ma, ma_number, sleep_time)
             else:
                 counter = 0
             time.sleep(sleep_time)
