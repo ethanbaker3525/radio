@@ -37,7 +37,7 @@ class MyUltrasonicSensor(UltrasonicSensor):
         UltrasonicSensor.__init__(self, PIN_TRIGGER, PIN_ECHO)
         self.volume = 50
 
-    def calibrate(self, num_tests=100, avg_w=0.7, min_w=0.3, per_weight=0.90):
+    def calibrate(self, num_tests=100, avg_w=0.7, min_w=0.3, per_weight=0.30):
 
         tests = [self.get_distance() for i in range(num_tests)]
         self.threshold = ((sum(tests)/num_tests)*avg_w + min(tests)*min_w) * per_weight
@@ -54,7 +54,7 @@ class MyUltrasonicSensor(UltrasonicSensor):
         while 1:
             del ma[0]
             ma.append(self.get_distance())
-            
+
             # Pause Play
             if num_ticks_pause >= ticks and sum(ma)/ma_number >= self.threshold:
                 print('pause/play')
