@@ -1,6 +1,8 @@
 import RPi.GPIO as GPIO
 import time
 
+from errorlogging import log
+
 class UltrasonicSensor:
 
     def __init__(self, trigger_pin, echo_pin, gpio_mode=GPIO.BOARD):
@@ -11,7 +13,7 @@ class UltrasonicSensor:
 
     def get_distance(self):
         while 1:
-            
+
             try:
                 GPIO.output(PIN_TRIGGER, GPIO.HIGH)
                 time.sleep(0.00001)
@@ -25,8 +27,7 @@ class UltrasonicSensor:
                 return round(pulse_duration * 17150, 2)
 
             except Exception as e:
-                open('error_logs.txt', 'w').write(e+'\n')
-                print('get_distance() ERROR WRITTEN TO error_logs.txt')
+                log(e)
 
     def quit(self):
         GPIO.cleanup()
