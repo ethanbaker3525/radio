@@ -50,7 +50,10 @@ if __name__ == '__main__':
     device = RadioUltrasonicSensor(PIN_TRIGGER, PIN_ECHO, STREAM_URL, DESIRED_VOLUME)
 
     try:
+        print('calibrating')
         device.calibrate()
+        print('done')
+        print('begining loop')
         device.loop()
     except Exception as e:
         log(e)
