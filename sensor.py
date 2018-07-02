@@ -19,7 +19,7 @@ class UltrasonicSensor:
             try:
                 GPIO.output(self.trigger_pin, GPIO.HIGH)
                 time.sleep(0.00001)
-                GPIO.output(self.echo_pin, GPIO.LOW)
+                GPIO.output(self.trigger_pin, GPIO.LOW)
                 while GPIO.input(PIN_ECHO)==0:
                     pulse_start_time = time.time()
                 while GPIO.input(PIN_ECHO)==1:
