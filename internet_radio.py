@@ -37,6 +37,7 @@ class RadioUltrasonicSensor(UltrasonicSensor, Stream):
             time.sleep(0.1)
 
     def activate(self):
+        print('activated')
         self.grad_change_vol(d_vol, 2)
         self.set_sleep_timer()
 
