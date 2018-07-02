@@ -6,6 +6,8 @@ from errorlogging import log
 class UltrasonicSensor:
 
     def __init__(self, trigger_pin, echo_pin, gpio_mode=GPIO.BOARD):
+        self.trigger_pin = trigger_pin
+        self.echo_pin = echo_pin
         GPIO.setmode(gpio_mode)
         GPIO.setup(trigger_pin, GPIO.OUT)
         GPIO.setup(echo_pin, GPIO.IN)
@@ -15,9 +17,9 @@ class UltrasonicSensor:
         while 1:
 
             try:
-                GPIO.output(PIN_TRIGGER, GPIO.HIGH)
+                GPIO.output(self.trigger_pin, GPIO.HIGH)
                 time.sleep(0.00001)
-                GPIO.output(PIN_TRIGGER, GPIO.LOW)
+                GPIO.output(self.echo_pin, GPIO.LOW)
                 while GPIO.input(PIN_ECHO)==0:
                     pulse_start_time = time.time()
                 while GPIO.input(PIN_ECHO)==1:
