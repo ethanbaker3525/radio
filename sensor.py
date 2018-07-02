@@ -26,6 +26,7 @@ class UltrasonicSensor:
                     pulse_end_time = time.time()
                 pulse_duration = pulse_end_time - pulse_start_time
                 time.sleep(0.00001)
+                print('!')
                 return round(pulse_duration * 17150, 2)
 
             except Exception as e:
