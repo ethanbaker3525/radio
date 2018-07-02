@@ -38,12 +38,12 @@ class RadioUltrasonicSensor(UltrasonicSensor, Stream):
 
     def activate(self):
         print('activated')
-        self.grad_change_vol(d_vol, 2)
+        self.grad_change_vol(self.d_vol, 2)
         self.set_sleep_timer()
 
     def quit(self):
-        UltrasonicSensor.quit()
-        Stream.quit()
+        UltrasonicSensor.quit(self)
+        Stream.quit(self)
 
 if __name__ == '__main__':
 
